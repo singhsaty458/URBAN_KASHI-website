@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1200" viewBox="0 0 1000 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Kashi, a riverside study</title>
+  <desc id="desc">Original architectural illustration inspired by the steps, arches and river of Kashi. Not a photograph of a real location.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#d9c9af"/><stop offset="1" stop-color="#eee2cc"/></linearGradient>
+    <linearGradient id="river" x2="0" y2="1"><stop stop-color="#8c9786"/><stop offset="1" stop-color="#344b43"/></linearGradient>
+    <pattern id="grain" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".5" fill="#272c21" opacity=".07"/></pattern>
+    <pattern id="arches" width="95" height="150" patternUnits="userSpaceOnUse"><path d="M20 145V85a28 28 0 0 1 56 0v60Z" fill="#5e5545"/><path d="M26 145V88a22 22 0 0 1 44 0v57" fill="#776653"/></pattern>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1000v1200H0z"/>
+  <circle cx="746" cy="260" r="103" fill="#c58c65" opacity=".8"/>
+  <path d="M0 610V395h80v-32h25v32h100v-80h180v42h150v110h120v-50h105v60h120v-90h120v223Z" fill="#b4a086" opacity=".55"/>
+  <path d="M0 685V450h120v-55h190v95h130v-64h200v-65h70v-70h60v70h75v125h145v199Z" fill="#a28e72"/>
+  <path d="M170 465V245h170v220Z" fill="#ad7655"/>
+  <path d="M157 245h196v-18H157zM180 227l75-130 75 130Z" fill="#966044"/>
+  <path d="M250 97V64h9v33" stroke="#6e5640" stroke-width="5"/>
+  <path d="M215 465V352a40 40 0 0 1 80 0v113Z" fill="#68543f"/>
+  <path d="M60 515h360v155H60z" fill="#b5825e"/>
+  <path d="M60 515h360v155H60z" fill="url(#arches)"/>
+  <path d="M485 640V417h170v223Z" fill="#c7aa81"/>
+  <path d="M470 418h200v-17H470zM496 401V376a74 74 0 0 1 148 0v25" fill="#b39971"/>
+  <path d="M527 642V515a43 43 0 0 1 86 0v127Z" fill="#655d49"/>
+  <path d="M765 669V485h155v184Z" fill="#93714f"/>
+  <path d="M751 485l92-132 92 132Z" fill="#866344"/>
+  <path d="M825 353v-38h30v38" fill="#866344"/>
+  <path d="M0 667h1000v164H0Z" fill="#b9a17e"/>
+  <g stroke="#80745c" stroke-width="4" opacity=".7"><path d="M0 685h1000M0 711h1000M0 737h1000M0 763h1000M0 789h1000M0 815h1000"/></g>
+  <path d="M0 710h285v120H0" fill="#aa8963"/><path d="M0 735h270M0 760h255M0 785h240M0 810h225" stroke="#77654e" stroke-width="4"/>
+  <path d="M0 837q250-22 500-7t500-10v380H0Z" fill="url(#river)"/>
+  <g fill="none" stroke="#c8c6aa" stroke-width="2" opacity=".38"><path d="M60 883h245m180-12h290m45 39h120M15 948h165m130-25h235m70 50h200M120 1030h210m270-12h320M40 1110h330m90-25h235m-465 78h200m265-33h225"/></g>
+  <path d="M525 944q125 49 250-9l-34 48q-82 22-176-6Z" fill="#353d30"/>
+  <path d="M581 952q52-51 103-1" fill="none" stroke="#685a3e" stroke-width="9"/>
+  <path d="m691 884-17 83" stroke="#433d2e" stroke-width="5"/>
+  <path d="M590 1000q71 12 145-5" fill="none" stroke="#d3c7a6" stroke-width="3" opacity=".3"/>
+  <path fill="url(#grain)" d="M0 0h1000v1200H0z"/>
+  <text x="70" y="100" font-family="Georgia,serif" font-size="22" letter-spacing="5" fill="#716047">KASHI / A RIVERSIDE STUDY</text>
+  <text x="70" y="1150" font-family="Arial,sans-serif" font-size="13" letter-spacing="3" fill="#d5d5bd">ORIGINAL ILLUSTRATION · URBAN KASHI</text>
+</svg>

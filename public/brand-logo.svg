@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-labelledby="brand-title brand-description">
+  <title id="brand-title">अर्बन काशी — URBAN KASHI</title>
+  <desc id="brand-description">An original crisp vector interpretation of the supplied mark: an upright gold trishul above Hindi and English lettering on deep navy. Not an exact traced restoration.</desc>
+  <!-- Text remains editable Unicode, not outlines. Standalone rendering depends
+       on installed fonts, especially Devanagari support. No fonts are fetched.
+       For identical output across devices, convert text to outlines in a vector
+       editor using a locally installed font before distributing that version. -->
+  <defs>
+    <linearGradient id="trishul-gold" x1="12" y1="20" x2="108" y2="145" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b99145" />
+      <stop offset="0.38" stop-color="#efd595" />
+      <stop offset="0.68" stop-color="#d4ae63" />
+      <stop offset="1" stop-color="#b99145" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="#15213d" />
+  <g transform="translate(298 62) scale(1.7)" fill="url(#trishul-gold)" aria-hidden="true">
+    <path d="M60 3C57 31 52 51 38 70C47 79 54 93 54 105C54 118 40 115 38 103L38 97C32 98 29 102 28 108C20 106 19 99 22 88C26 72 33 55 31 39C30 29 26 20 22 15C25 41 12 61 6 81C0 103 4 117 18 124C20 119 24 116 29 115C22 120 20 126 19 132C30 127 42 131 50 140C54 143 47 148 53 151C52 159 68 159 67 151C73 148 66 143 70 140C78 131 90 127 101 132C100 126 98 120 91 115C96 116 100 119 102 124C116 117 120 103 114 81C108 61 95 41 98 15C94 20 90 29 89 39C87 55 94 72 98 88C101 99 100 106 92 108C91 102 88 98 82 97L82 103C80 115 66 118 66 105C66 93 73 79 82 70C68 51 63 31 60 3Z" />
+  </g>
+  <g fill="#e3c17b" text-anchor="middle" aria-hidden="true">
+    <text x="400" y="422" font-family="'Noto Serif Devanagari', 'Kokila', 'Nirmala UI', 'Mangal', serif" font-size="78" font-weight="500" lang="hi" xml:lang="hi">अर्बन काशी</text>
+    <text x="404" y="482" font-family="Georgia, 'Times New Roman', serif" font-size="27" letter-spacing="8" lang="en" xml:lang="en">URBAN KASHI</text>
+  </g>
+</svg>

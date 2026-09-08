@@ -1,0 +1,113 @@
+/* Scoped brand styles: no external assets or changes to the surrounding layout.
+   A parent may supply a local Noto Serif Devanagari @font-face; otherwise the
+   browser uses an installed Devanagari-capable serif font. */
+.uk-brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 190px;
+  min-height: 112px;
+  padding: 8px 12px;
+  background: transparent;
+  color: #e3c17b;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: middle;
+  isolation: isolate;
+}
+
+.uk-brand .uk-brand__perspective {
+  display: block;
+  width: 36px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  perspective: 600px;
+  perspective-origin: center;
+  line-height: 0;
+}
+
+.uk-brand .uk-brand__trishul {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-box: view-box;
+  transform-origin: center center;
+  backface-visibility: visible;
+  animation: uk-brand-upright-turn 8s linear infinite;
+}
+
+.uk-brand .uk-brand__hindi {
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: #e3c17b;
+  font-family: 'Noto Serif Devanagari', 'Nirmala UI', 'Kokila', 'Mangal', serif;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: normal;
+  white-space: nowrap;
+}
+
+.uk-brand .uk-brand__english {
+  display: block;
+  margin: 0;
+  padding: 0 0 0 0.25em;
+  color: #e3c17b;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.uk-brand.uk-brand--compact {
+  width: 150px;
+  min-height: 70px;
+  padding: 3px 8px;
+}
+
+.uk-brand--compact .uk-brand__perspective {
+  width: 22.5px;
+  height: 30px;
+}
+
+.uk-brand--compact .uk-brand__hindi {
+  font-size: 19px;
+  line-height: 1.5;
+}
+
+.uk-brand--compact .uk-brand__english {
+  font-size: 8px;
+  line-height: 10px;
+}
+
+/* Only the glyph spins around its vertical axis; the lettering stays still. */
+@keyframes uk-brand-upright-turn {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uk-brand .uk-brand__trishul {
+    animation: none;
+    transform: none;
+  }
+}
+
+@media print {
+  .uk-brand .uk-brand__trishul {
+    animation: none;
+    transform: none;
+  }
+}

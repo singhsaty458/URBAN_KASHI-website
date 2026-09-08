@@ -1,0 +1,4 @@
+slug,name,category,brand,design,color,size,barcode,sku,price,stock,image,description
+uk-demo-white-shirt,UK DEMO White Shirt,Shirts,UK DEMO,UK-DEMO-DESIGN-01,White,M,UK-DEMO-000001,UK-DEMO-WHITE-M,1299,5,/images/photo-1598033129183-c4f50c736f10.jpg,"Dummy catalogue row, replace product data and imagery before sale"
+uk-demo-white-shirt,UK DEMO White Shirt,Shirts,UK DEMO,UK-DEMO-DESIGN-01,White,L,UK-DEMO-000002,UK-DEMO-WHITE-L,1299,7,/images/photo-1598033129183-c4f50c736f10.jpg,"Dummy catalogue row, replace product data and imagery before sale"
+uk-demo-navy-shirt,UK DEMO Navy Shirt,Shirts,UK DEMO,UK-DEMO-DESIGN-01,Navy,M,UK-DEMO-000003,UK-DEMO-NAVY-M,1299,4,/images/photo-1598033129183-c4f50c736f10.jpg,"Dummy catalogue row, replace product data and imagery before sale"
