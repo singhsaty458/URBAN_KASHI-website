@@ -1,18 +1,18 @@
 # Winter editorial video carousel
 
-The homepage uses **three real, locally served stock-video edits** of menswear coats/tailored layers. These are vintage-style coat-fashion shots, **not puffer-jacket product footage, not URBAN KASHI inventory, and not an endorsement by the models**. The visible hero note identifies them as stock footage. No AI-generated or simulated video is presented as real footage.
+The homepage uses **three real, locally served stock-video edits**: a worn leather biker jacket, an outdoor bomber jacket, and a detail of a studded leather jacket carried over a shoulder. These replace the previous blazer/coat-fashion hero. **No verified parka or baseball/varsity clip is included**; bomber footage is not labelled as either. These are **not URBAN KASHI inventory and not an endorsement by the people shown**. The visible hero note identifies stock footage. No AI-generated or simulated video is presented as real footage.
 
 ## Sources and licensing
 
-Individual clip pages and the [Mixkit Stock Video Free License](https://mixkit.co/license/#videoFree) were reviewed on **8 September 2026**. Each selected clip page explicitly permits commercial/personal use under the Free License, not the Restricted License. The contributor profile is [Mixkit](https://mixkit.co/@mixkit/); no individual creator is asserted. Credit is appreciated, not required. Review the [Mixkit User Terms](https://mixkit.co/terms/) for limitations. Do not resell/redistribute the footage as standalone stock, claim ownership, or imply model endorsement. Replace stock with owner-authorized product footage before representing any real garment for sale.
+Individual clip pages and the [Mixkit Stock Video Free License](https://mixkit.co/license/#videoFree) were reviewed on **8 September 2026**. Each selected clip page explicitly permits commercial/personal use under the Free License, not the Restricted License. Contributor credits are available on the linked item pages. Credit is appreciated, not required. Review the [Mixkit User Terms](https://mixkit.co/terms/) for limitations. Do not resell/redistribute the footage as standalone stock, claim ownership, or imply model/brand endorsement. Replace stock with owner-authorized product footage before representing any real garment for sale.
 
 | Local basename | Licensed source page | Public source rendition |
 | --- | --- | --- |
-| `winter-editorial-41491` | [Stylish old fashion male model putting on a coat](https://mixkit.co/free-stock-video/stylish-old-fashion-male-model-putting-on-a-coat-41491/) | <https://assets.mixkit.co/videos/41491/41491-720.mp4> |
-| `winter-editorial-41479` | [Boy modeling old style in a suit and coat](https://mixkit.co/free-stock-video/boy-modeling-old-style-in-a-suit-and-coat-41479/) | <https://assets.mixkit.co/videos/41479/41479-720.mp4> |
-| `winter-editorial-41480` | [Young man modeling old fashion style](https://mixkit.co/free-stock-video/young-man-modeling-old-fashion-style-41480/) | <https://assets.mixkit.co/videos/41480/41480-720.mp4> |
+| `winter-editorial-1` | [Man in biker gear approaches stationary motorcycle](https://mixkit.co/free-stock-video/man-in-biker-gear-approaches-stationary-motorcycle-1/) | <https://assets.mixkit.co/videos/1/1-720.mp4> |
+| `winter-editorial-50551` | [A young man raises his professional camera to take a picture of a waterfall](https://mixkit.co/free-stock-video/a-young-man-raises-his-professional-camera-to-take-a-50551/) | <https://assets.mixkit.co/videos/50551/50551-720.mp4> |
+| `winter-editorial-1391` | [Punk man holding a black leather jacket](https://mixkit.co/free-stock-video/punk-man-holding-a-black-leather-jacket-1391/) | <https://assets.mixkit.co/videos/1391/1391-720.mp4> |
 
-Each local MP4 is a six-second edit of the site's HD-ready rendition, encoded H.264/yuv420p with faststart, no audio stream and no source metadata. JPEG posters are extracted from the corresponding clip. Aspect ratio is preserved; the hero uses `object-fit: cover`, so crop varies between desktop/mobile.
+Each local MP4 is an edit of up to six seconds of the site's HD-ready rendition (clip 1 begins at source second 5), encoded H.264/yuv420p with faststart, no audio stream and no source metadata. JPEG posters are extracted from the corresponding clip. Aspect ratio is preserved; the hero uses `object-fit: cover`, so crop varies between desktop/mobile.
 
 Files live under `public/videos` and `public/images`. They are included in the normal Vite production build, work after cloning, and do not contact Mixkit from visitors' browsers. The app needs no API key, new service or video-processing package to play them. Normal clone/install instructions remain unchanged.
 
@@ -20,8 +20,9 @@ Files live under `public/videos` and `public/images`. They are included in the n
 
 - Only the selected slide may play, muted and inline, with no native audio/fullscreen controls. Video sources are attached lazily when the active slide first becomes eligible for motion; inactive/unvisited slides do not request MP4s.
 - Existing six-second autoplay changes slides with a horizontal left slide; Previous moves the opposite direction. Dots and touch/pen horizontal swipes work too. Vertical scrolling and pinch zoom remain available.
-- Videos, image drift and autoplay pause on user pause, hover, focus inside the hero, hidden tab, offscreen hero, or reduced-motion preference. User pause persists in local storage.
-- Explicit pause/reduced motion disables slide transition animation. Hover/focus pause automatic movement but manual slide navigation can still animate.
+- Hover does **not** pause the active video or the six-second carousel. Keyboard focus inside the hero holds the carousel position and image drift, but the active video continues playing. This keeps controls stable without freezing footage.
+- User Pause motion, hidden tab, offscreen hero and reduced-motion preference stop playback. User pause persists in local storage. Browser power/autoplay policies may still prevent playback; continuous playback is not forced around browser/accessibility restrictions.
+- Explicit pause/reduced motion disables slide transition animation. Manual slide navigation still works, including when keyboard focus holds autoplay.
 - Reduced-motion users see posters instead of video. `navigator.connection.saveData`, where supported at page load, also selects posters without requesting clips. Data-saver does not itself disable image/carousel animation; use Pause motion for that.
 - Poster images stay underneath video. Decode/network errors or rejected autoplay retain the poster with functioning navigation. Failed clips are not continuously retried; reload can retry. No blank hero or unhandled `play()` rejection.
 - Videos are decorative/hidden from assistive technology; descriptive poster alt text and labelled slide groups remain available. No speech/audio is included, so there is no spoken information requiring captions.

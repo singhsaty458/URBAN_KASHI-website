@@ -1,17 +1,18 @@
 :root {
   font-family: 'DM Sans', Arial, sans-serif;
-  color: #252b23;
-  background: #f4f0e8;
+  color: #111412;
+  background: #fff;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  --paper: #f4f0e8;
-  --paper-light: #faf8f3;
-  --ink: #252b23;
-  --muted: #686a60;
-  --accent: #ac5138;
-  --olive: #303b2c;
-  --line: #d8d6ca;
+  --paper: #fff;
+  --paper-light: #f6f6f6;
+  --ink: #111412;
+  --muted: #606460;
+  --accent: #775b30;
+  --olive: #111412;
+  --line: #dedfdd;
+  --gold: #e6c59a;
   --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 }
 * { box-sizing: border-box; }

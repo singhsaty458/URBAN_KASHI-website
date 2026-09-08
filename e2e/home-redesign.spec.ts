@@ -142,7 +142,7 @@ test('reduced motion removes zoom and automatic slides but leaves manual navigat
   await expect(page.locator('.fashion-lookbook')).toHaveAttribute('data-motion', 'stopped');
 });
 
-test('6000ms autoplay suspends on hover, focus and offscreen, then resumes with a fresh timer', async ({ page }) => {
+test('6000ms autoplay continues on hover, holds on keyboard focus/offscreen and resumes with a fresh timer', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await frozenClock(page);
   await page.goto('/');
@@ -159,16 +159,16 @@ test('6000ms autoplay suspends on hover, focus and offscreen, then resumes with 
   expect(heading).not.toBeNull();
   await page.mouse.move(heading!.x + 5, heading!.y + 5);
   await expect(page.locator('.fashion-hero')).toHaveAttribute('data-hovered', 'true');
-  await expectHeroMotion(page, false);
-  await page.clock.fastForward(12_000);
-  await showSlide(page, 2);
+  await expectHeroMotion(page, true);
+  await page.clock.fastForward(6000);
+  await showSlide(page, 3);
   await page.mouse.move(0, 0);
   await expectHeroMotion(page, true);
   await page.getByRole('button', { name: 'Next slide', exact: true }).focus();
   await expect(page.locator('.fashion-hero')).toHaveAttribute('data-focus-within', 'true');
   await expectHeroMotion(page, false);
   await page.clock.fastForward(12_000);
-  await showSlide(page, 2);
+  await showSlide(page, 3);
   await leaveHeroControls(page);
   await expectHeroMotion(page, true);
   await scrollToLookbook(page);
@@ -178,14 +178,14 @@ test('6000ms autoplay suspends on hover, focus and offscreen, then resumes with 
     await expect(image).toHaveCSS('animation-play-state', 'running');
   }
   await page.clock.fastForward(12_000);
-  await showSlide(page, 2);
+  await showSlide(page, 3);
   await leaveHeroControls(page);
   await expectHeroMotion(page, true);
   await expect(page.locator('.fashion-lookbook')).toHaveAttribute('data-motion', 'stopped');
   await page.clock.fastForward(5999);
-  await expect(page.locator('.fashion-hero')).toHaveAttribute('data-active-slide', '2');
-  await page.clock.fastForward(1);
   await expect(page.locator('.fashion-hero')).toHaveAttribute('data-active-slide', '3');
+  await page.clock.fastForward(1);
+  await expect(page.locator('.fashion-hero')).toHaveAttribute('data-active-slide', '1');
 });
 
 test('user pause survives reload, stops hero/lookbook/brand motion and resumes only after leaving controls', async ({ page }) => {
@@ -297,14 +297,14 @@ test('real catalogue tabs support roving keyboard selection, four-piece limits a
 
 test('failed photography has an accessible fallback and catalogue failure retries into empty and recovered edits', async ({ page }) => {
   let catalogueState: 'error' | 'empty' | 'real' = 'error';
-  await page.route('**/images/winter-editorial-41491.jpg', route => route.fulfill({ status: 200, contentType: 'image/jpeg', body: 'deliberately invalid test image' }));
+  await page.route('**/images/winter-editorial-1.jpg', route => route.fulfill({ status: 200, contentType: 'image/jpeg', body: 'deliberately invalid test image' }));
   await page.route('**/api/products', route => catalogueState === 'real' ? route.fallback() : route.fulfill({
     status: catalogueState === 'error' ? 503 : 200,
     json: catalogueState === 'error' ? { error: 'Test edit temporarily unavailable.' } : { products: [] },
   }));
   await page.goto('/');
   const fallback = page.locator('.fashion-hero__slide.is-active .image-fallback');
-  await expect(fallback).toHaveAccessibleName('Demo editorial photograph of a male model putting on a winter coat');
+  await expect(fallback).toHaveAccessibleName('Demo editorial photograph of a man in a black leather biker jacket beside a motorcycle');
   await expect(fallback).toBeVisible();
   const panel = page.getByRole('tabpanel');
   await expect(panel.getByRole('alert')).toContainText('Test edit temporarily unavailable.');

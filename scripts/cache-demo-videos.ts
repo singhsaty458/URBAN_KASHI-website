@@ -18,7 +18,7 @@ function ffmpeg(args: string[]) {
 }
 
 try {
-  for (const id of [41491, 41479, 41480]) {
+  for (const { id, start } of [{ id: 1, start: 5 }, { id: 50551, start: 0 }, { id: 1391, start: 0 }]) {
     const output = join(videos, `winter-editorial-${id}.mp4`);
     const poster = join(images, `winter-editorial-${id}.jpg`);
     if (!existsSync(output)) {
@@ -41,7 +41,7 @@ try {
       const original = join(temporary, `${id}.mp4`);
       writeFileSync(original, Buffer.concat(chunks));
       // Six-second, silent H.264 edits; faststart and no metadata. No stretched aspect ratios.
-      ffmpeg(['-i', original, '-t', '6', '-an', '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+      ffmpeg(['-ss', String(start), '-i', original, '-t', '6', '-an', '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
         '-c:v', 'libx264', '-preset', 'medium', '-crf', '25', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-map_metadata', '-1', output]);
     }
     if (!existsSync(poster)) ffmpeg(['-i', output, '-frames:v', '1', '-q:v', '3', '-update', '1', poster]);

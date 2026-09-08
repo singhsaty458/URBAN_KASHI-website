@@ -1,16 +1,16 @@
-/* Home-only art direction. Shared store, drawer and brand styles stay independent. */
+/* Homepage composition; shared chrome and product typography live in storefront-theme.css. */
 .fashion-home {
   --fashion-dark: #111412;
   --fashion-gold: #e6c59a;
-  --fashion-muted: #626761;
-  --fashion-line: #dde1dc;
+  --fashion-muted: #606460;
+  --fashion-line: #dedfdd;
   --fashion-gutter: clamp(20px, 4.5vw, 80px);
   --ink: #111412;
-  --muted: #626761;
+  --muted: #606460;
   --paper: #fff;
-  --paper-light: #f5f6f4;
-  --line: #dde1dc;
-  --accent: #805029;
+  --paper-light: #f6f6f6;
+  --line: #dedfdd;
+  --accent: #775b30;
   background: #fff;
   color: var(--fashion-dark);
   font-family: 'DM Sans', Arial, sans-serif;
@@ -82,7 +82,7 @@
   font-weight: 600;
 }
 
-.fashion-home .fashion-text-link:hover { color: #805029; }
+.fashion-home .fashion-text-link:hover { color: var(--accent); }
 
 /* The media occupies the right 65%; a full-width scrim protects stationary copy. */
 .fashion-home .fashion-hero {
@@ -143,7 +143,9 @@
   transition: opacity .3s ease;
 }
 .fashion-home .fashion-hero__video.is-ready { opacity: 1; }
-.fashion-home .fashion-hero__slide[data-slide='1'] :is(.fashion-hero__photo, .fashion-hero__video) { object-position: center 30%; }
+.fashion-home .fashion-hero__slide[data-slide='1'] :is(.fashion-hero__photo, .fashion-hero__video) { object-position: 70% 30%; }
+.fashion-home .fashion-hero__slide[data-slide='2'] :is(.fashion-hero__photo, .fashion-hero__video) { object-position: 35% 30%; }
+.fashion-home .fashion-hero__slide[data-slide='3'] :is(.fashion-hero__photo, .fashion-hero__video) { object-position: 40% 30%; }
 .fashion-home[data-reduced-motion='true'] .fashion-hero__video { opacity: 0; transition: none; }
 
 .fashion-home .fashion-hero__photo {
@@ -428,29 +430,6 @@
 .fashion-home .fashion-heritage h2 { margin-right: auto; font-size: clamp(27px, 3vw, 42px); line-height: 1.12; }
 .fashion-home .fashion-heritage .fashion-text-link { flex-shrink: 0; }
 
-/* Home-only chrome. Do not cascade dark colors into the light modal drawers. */
-body:has(.fashion-home) { background: #111412; }
-body:has(.fashion-home)::after { display: none; }
-body:has(.fashion-home) .announcement { background: #1d231e; color: #e6c59a; border-bottom: 1px solid #ffffff14; }
-body:has(.fashion-home) .site-header { background: #111412f5; color: #f7f8f5; border-bottom-color: #ffffff24; }
-body:has(.fashion-home) .site-header .header-inner { min-height: 92px; padding-block: 10px; }
-body:has(.fashion-home) .site-header .icon-button { min-width: 44px; min-height: 44px; }
-body:has(.fashion-home) .site-header .icon-button:hover { color: #e6c59a; }
-body:has(.fashion-home) .site-header .desktop-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; }
-body:has(.fashion-home) .site-header .desktop-nav a::after,
-body:has(.fashion-home) .site-header .nav-dot { background: #e6c59a; }
-body:has(.fashion-home) .site-header .counter { background: #e6c59a; color: #111412; }
-body:has(.fashion-home) :is(.site-header, .site-footer) :focus-visible { outline-color: #e6c59a; }
-body:has(.fashion-home) .site-footer { --line: #ffffff24; background: #111412; color: #f4f6f1; border-color: #ffffff24; }
-body:has(.fashion-home) .site-footer .footer-top { padding-block: 40px 28px; }
-body:has(.fashion-home) .site-footer .footer-brand p { font-family: 'DM Sans', Arial, sans-serif; font-size: 14px; line-height: 1.6; letter-spacing: 0; margin-top: 16px; }
-body:has(.fashion-home) .site-footer .footer-top h2 { font-size: 12px; font-weight: 600; margin-bottom: 12px; }
-body:has(.fashion-home) .site-footer .footer-top > div:not(.footer-brand) > a { display: flex; align-items: center; min-height: 44px; margin-bottom: 0; color: #c5ccc2; font-size: 12px; }
-body:has(.fashion-home) .site-footer :is(.footer-note p, .demo-label, .footer-bottom) { color: #b5beb2; font-size: 11px; }
-body:has(.fashion-home) .site-footer .footer-top > div > a:hover { color: #e6c59a; }
-body:has(.fashion-home) .site-footer .demo-label > span { background: #e6c59a; }
-body:has(.fashion-home) .site-footer .footer-bottom { flex-wrap: wrap; padding-block: 20px; gap: 12px 24px; }
-
 /* Shared pause also stops existing looping brand/spinner animation, without
    changing the transparent gold artwork or the upright rotation itself. */
 .fashion-home:not([data-motion='running']) .spinner,
@@ -539,11 +518,6 @@ body:has(.fashion-home:not([data-motion='running'])) .uk-brand__trishul { animat
   .fashion-home .fashion-lookbook .fashion-kicker { max-width: 240px; }
   .fashion-home .fashion-heritage { padding-block: 32px; gap: 20px; }
   .fashion-home .fashion-heritage h2 { flex-basis: 100%; font-size: 30px; }
-  body:has(.fashion-home) .site-header .header-inner { padding-inline: 12px; gap: 4px; }
-  body:has(.fashion-home) .site-header .mobile-menu { margin-left: 0; }
-  body:has(.fashion-home) .site-header .nav-actions .icon-button { padding-inline: 8px; }
-  body:has(.fashion-home) .site-header .bag-count { margin-left: 4px; }
-  body:has(.fashion-home) .site-footer .footer-top { padding-block: 32px 24px; }
 }
 
 @media (max-width: 374px) {
@@ -553,7 +527,6 @@ body:has(.fashion-home:not([data-motion='running'])) .uk-brand__trishul { animat
   .fashion-home .fashion-category-card h3 { font-size: 18px; }
   .fashion-home .fashion-category-card__label { inset-inline: 8px; }
   .fashion-home .fashion-filters button { padding-inline: 8px; }
-  body:has(.fashion-home) .site-header .header-inner { padding-inline: 8px; gap: 2px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -93,7 +93,10 @@ export function Home() {
 
   // User intent is independent of temporary blockers and OS accessibility settings.
   const motionAllowed = !paused && !reducedMotion && pageVisible;
-  const heroRunning = motionAllowed && hero.inView && !hovered && !focusWithin;
+  // Hover never interrupts playback. Keyboard focus holds the carousel position
+  // without freezing the active video; Pause still stops both independently.
+  const heroRunning = motionAllowed && hero.inView && !focusWithin;
+  const videoRunning = motionAllowed && hero.inView && !saveData;
   const motionState = reducedMotion ? 'reduced' : paused ? 'paused' : !pageVisible ? 'hidden' : 'running';
 
   useEffect(() => {
@@ -166,6 +169,7 @@ export function Home() {
         aria-label="Fashion editorial"
         data-active-slide={activeSlide + 1}
         data-motion={heroRunning ? 'running' : 'stopped'}
+        data-video-motion={videoRunning ? 'running' : 'stopped'}
         data-in-view={hero.inView}
         data-hovered={hovered}
         data-focus-within={focusWithin}
@@ -205,7 +209,7 @@ export function Home() {
               <HeroVideo
                 src={slide.video}
                 poster={slide.image}
-                running={index === activeSlide && heroRunning && !saveData}
+                running={index === activeSlide && videoRunning}
               />
             </div>
           ))}
@@ -277,7 +281,7 @@ export function Home() {
           </div>
           <p id="fashion-motion-help" className="sr-only">
             Pause controls all looping homepage motion, including muted videos. Swipe left or right to change slides.
-            Slides and videos also pause while hovered or focused.
+            Hover does not pause playback. Keyboard focus holds the slide position while video keeps playing.
             After resuming, move focus and the pointer outside the hero to allow automatic slides.
             Your device’s reduced-motion preference always takes priority. Manual slide controls remain available.
           </p>

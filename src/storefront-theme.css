@@ -1,0 +1,97 @@
+/* Shared black / champagne gold / white theme. Keep dark chrome local so
+   dialogs, customer forms and admin tools retain readable light surfaces. */
+body { background: var(--paper); color: var(--ink); }
+body::after { display: none; }
+::selection { background: var(--gold); color: var(--ink); }
+.announcement { background: #1c201d; color: var(--gold); border-bottom: 1px solid #ffffff14; }
+.site-header { background: #111412f5; color: #fff; border-bottom-color: #ffffff24; }
+.site-header .header-inner { min-height: 92px; padding-block: 10px; }
+.site-header .icon-button { min-width: 44px; min-height: 44px; }
+.site-header .icon-button:hover { color: var(--gold); }
+.site-header .desktop-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; }
+.site-header .desktop-nav a::after, .site-header .nav-dot { background: var(--gold); }
+.site-header .counter { background: var(--gold); color: var(--ink); }
+:is(.site-header, .site-footer) :focus-visible { outline-color: var(--gold); }
+.site-footer { --line: #ffffff24; background: #111412; color: #fff; border-color: var(--line); }
+.site-footer .footer-top { padding-block: 40px 28px; }
+.site-footer .footer-brand p { font-family: 'DM Sans', Arial, sans-serif; font-size: 14px; line-height: 1.6; letter-spacing: 0; margin-top: 16px; }
+.site-footer .footer-top h2 { font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+.site-footer .footer-top > div:not(.footer-brand) > a { display: flex; align-items: center; min-height: 44px; margin-bottom: 0; color: #c7ccc7; font-size: 12px; }
+.site-footer :is(.footer-note p, .demo-label, .footer-bottom) { color: #b9bfb9; font-size: 11px; }
+.site-footer .footer-top > div > a:hover { color: var(--gold); }
+.site-footer .demo-label > span { background: var(--gold); }
+.site-footer .footer-bottom { flex-wrap: wrap; padding-block: 20px; gap: 12px 24px; }
+
+.button { border-radius: 4px; border-color: var(--gold); background: var(--gold); color: var(--ink); font-weight: 650; }
+.button:hover:not(:disabled) { background: #f2d6b2; border-color: #f2d6b2; color: var(--ink); }
+.outline-button { background: var(--ink); border-color: var(--ink); color: #fff; }
+.outline-button:hover:not(:disabled) { background: #252a26; border-color: var(--gold); color: var(--gold); }
+.light-button { background: #fff; color: var(--ink); border-color: #fff; }
+input, select, textarea { border-radius: 4px; }
+.category-tabs button.active, .admin-tabs button.active, .auth-tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
+.size-options button { border-radius: 4px; }
+.size-options button.selected { background: var(--ink); color: var(--gold); border-color: var(--ink); }
+.page-heading .eyebrow, .shop-intro .eyebrow { color: var(--accent); }
+.drawer { background: #fff; color: var(--ink); }
+.drawer-header { background: var(--ink); color: #fff; border-bottom-color: var(--gold); }
+.drawer-header :focus-visible { outline-color: var(--gold); }
+.drawer-header .icon-button:hover { color: var(--gold); }
+.drawer-live-region { color: var(--ink); }
+.notice-panel { background: #f5f5f4; border-left-color: var(--accent); }
+.checkout-summary, .stats-grid > div, .product-editor, .payment-option { background: #f5f5f4; border-radius: 6px; }
+.paper-panel, .order-card, .inventory-row { background: #fff; border-radius: 6px; }
+.payment-choice:has(input:checked) { border-color: var(--accent); box-shadow: inset 3px 0 var(--accent); }
+.auth-editorial, .about-manifesto { background: var(--ink); color: #fff; }
+.auth-editorial h1 em, .about-manifesto h2 em, .about-manifesto > svg { color: var(--gold); }
+.auth-editorial > p { color: #c7ccc7; }
+.image-fallback, .fashion-home .image-fallback { background: #e9eae8; color: #4e544f; }
+.product-main-photo, .gallery-thumbs button, .product-image-upload__main img { background: #f0f1ef; }
+.product-main-photo > .gallery-caption { background: #fffffff0; color: var(--ink); }
+.fashion-home .fashion-heritage { background: #f6f6f6; }
+
+/* Equal-width images and stretching cards keep actions aligned across a row.
+   Names/prices wrap rather than truncate; card-width queries protect 320px phones. */
+.product-card { display: flex; flex-direction: column; min-width: 0; container-type: inline-size; }
+.product-card .product-image-wrap { flex: 0 0 auto; width: 100%; border-radius: 8px; background: #f0f1ef; }
+.product-card .product-image-wrap img { filter: none; }
+.product-card .product-meta { display: flex; flex: 1; flex-direction: column; align-items: stretch; gap: 9px; margin: 15px 0 16px; min-width: 0; }
+.product-card .product-meta > div { min-width: 0; max-width: 100%; }
+.product-card .product-category { font-size: 11px; line-height: 1.6; color: var(--muted); overflow-wrap: anywhere; }
+.product-card .product-meta h3 { min-height: 2.8em; font-size: 18px; font-weight: 600; line-height: 1.4; letter-spacing: -.015em; overflow-wrap: anywhere; }
+.product-card .product-meta h3 a { display: block; min-height: 44px; }
+.product-card .product-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin-top: auto; padding: 0; font-size: 20px; line-height: 1.4; font-weight: 700; white-space: normal; overflow-wrap: anywhere; }
+.product-card .product-price del { color: var(--muted); font-size: 13px; font-weight: 400; text-align: left; }
+.product-card .save-product { top: 8px; right: 8px; min-width: 44px; min-height: 44px; background: #fff; color: var(--ink); }
+.product-card .save-product.is-saved { color: var(--accent); }
+.product-card .quick-view { min-height: 44px; transform: none; background: #fffffff0; color: var(--ink); font-size: 11px; }
+.product-card .save-product:focus-visible, .product-card .quick-view:focus-visible { outline-offset: -4px; }
+.product-card .product-badge { max-width: calc(100% - 68px); overflow-wrap: anywhere; background: #fff; color: var(--ink); }
+.product-card .product-badge.sold-out-badge { background: var(--ink); color: #fff; }
+.product-card-actions { display: grid; gap: 10px; margin-top: auto; min-width: 0; }
+.product-card-actions label { font-size: 12px; gap: 6px; }
+.product-card-actions select { width: 100%; max-width: 100%; min-height: 44px; padding: 10px 8px; font-size: 16px; background: #fff; }
+.product-card-actions__buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.product-card-actions__buttons .button { min-width: 0; min-height: 46px; padding: 11px 8px; font-size: 13px; letter-spacing: 0; overflow-wrap: anywhere; }
+.product-card-actions .field-error { margin: 0; font-size: 12px; overflow-wrap: anywhere; }
+.detail-buy-now { margin-top: 12px; }
+.product-detail-copy h1 { overflow-wrap: anywhere; }
+.detail-price { font-size: 25px; font-weight: 600; flex-wrap: wrap; }
+.detail-price del { font-size: 16px; }
+
+@container (max-width: 240px) {
+  .product-card-actions__buttons { grid-template-columns: minmax(0, 1fr); }
+  .product-card .product-meta h3 { font-size: 16px; }
+  .product-card .product-price { font-size: 18px; min-height: 2.8em; align-content: start; }
+}
+@media (max-width: 600px) {
+  .site-header .header-inner { padding-inline: 12px; gap: 4px; }
+  .site-header .mobile-menu { margin-left: 0; }
+  .site-header .nav-actions .icon-button { padding-inline: 8px; }
+  .site-header .bag-count { margin-left: 4px; }
+  .site-footer .footer-top { padding-block: 32px 24px; }
+  .product-card .product-category { font-size: 10px; }
+  .product-card .product-meta { gap: 7px; margin-top: 12px; }
+}
+@media (max-width: 374px) {
+  .site-header .header-inner { padding-inline: 8px; gap: 2px; }
+}

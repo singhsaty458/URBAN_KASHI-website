@@ -4,6 +4,7 @@ import { ArrowUpRight, Heart, Minus, Plus, RefreshCw, X } from 'lucide-react';
 import type { Product } from '../../shared/types';
 import { useStore } from '../context/Store';
 import { money } from '../lib/api';
+import { CardPurchaseActions } from './CardPurchaseActions';
 import '../product-images.css';
 
 export function Image({ src, alt, className = '', ...props }: ImgHTMLAttributes<HTMLImageElement>) {
@@ -28,12 +29,14 @@ export function Reveal({ children, className = '' }: { children: ReactNode; clas
 export function ProductCard({ product }: { product: Product }) {
   const { wishlist, toggleWishlist } = useStore();
   const saved = wishlist.includes(product.id);
-  const available = product.variants.some(v => v.stock > 0);
+  const available = product.active && product.variants.some(v => v.stock > 0);
   return <article className="product-card"><div className="product-image-wrap"><Link to={`/product/${product.slug}`} tabIndex={-1} aria-hidden="true"><Image src={product.image} alt={product.name} loading="lazy" /></Link>
     {(product.badge || !available) && <span className={`product-badge${!available ? ' sold-out-badge' : ''}`}>{available ? product.badge : 'Sold out'}</span>}
     <button className={`icon-button save-product ${saved ? 'is-saved' : ''}`} onClick={() => toggleWishlist(product.id)} aria-label={`${saved ? 'Remove' : 'Save'} ${product.name} ${saved ? 'from' : 'to'} wishlist`} aria-pressed={saved}><Heart size={18} fill={saved ? 'currentColor' : 'none'} /></button>
     <Link to={`/product/${product.slug}`} className="quick-view">Discover the piece<ArrowUpRight size={16} /></Link>
-  </div><div className="product-meta"><div><p className="product-category">{product.category} <span>·</span> {product.color}</p><h3><Link to={`/product/${product.slug}`}>{product.name}</Link></h3></div><div className="product-price">{money(product.price)}{product.originalPrice !== null && product.originalPrice > product.price && <del>{money(product.originalPrice)}</del>}</div></div></article>;
+  </div><div className="product-meta"><div><p className="product-category">{product.category} <span>·</span> {product.color}</p><h3><Link to={`/product/${product.slug}`}>{product.name}</Link></h3></div><div className="product-price">{money(product.price)}{product.originalPrice !== null && product.originalPrice > product.price && <del>{money(product.originalPrice)}</del>}</div></div>
+    <CardPurchaseActions product={product} />
+  </article>;
 }
 export function ProductGrid({ products }: { products: Product[] }) { return <div className="product-grid">{products.map(product => <ProductCard product={product} key={product.id} />)}</div>; }
 export function Quantity({ value, max, onChange, label = 'Quantity' }: { value: number; max: number; onChange: (value: number) => void; label?: string }) { return <div className="quantity" role="group" aria-label={label}><button type="button" aria-label={`Decrease ${label}`} disabled={value <= 1} onClick={() => onChange(value - 1)}><Minus size={14} /></button><span aria-live="polite">{value}</span><button type="button" aria-label={`Increase ${label}`} disabled={value >= max} onClick={() => onChange(value + 1)}><Plus size={14} /></button></div>; }

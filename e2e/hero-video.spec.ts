@@ -31,6 +31,19 @@ test('real local clips decode and play silently; only active video loads and bac
   expect(await first.evaluate((video: HTMLVideoElement) => ({ muted: video.muted, inline: video.playsInline, loop: video.loop })))
     .toEqual({ muted: true, inline: true, loop: true });
   await expect(page.locator('.fashion-hero__slide:not(.is-active) video[src]')).toHaveCount(0);
+  const heading = await page.getByRole('heading', { level: 1 }).boundingBox();
+  expect(heading).not.toBeNull();
+  await page.mouse.move(heading!.x + 5, heading!.y + 5);
+  await expect(page.locator('.fashion-hero')).toHaveAttribute('data-hovered', 'true');
+  await expect(page.locator('.fashion-hero')).toHaveAttribute('data-motion', 'running');
+  const frames = await first.evaluate((video: HTMLVideoElement) => video.getVideoPlaybackQuality().totalVideoFrames);
+  await expect.poll(() => first.evaluate((video: HTMLVideoElement) => !video.paused)).toBe(true);
+  await expect.poll(() => first.evaluate((video: HTMLVideoElement) => video.getVideoPlaybackQuality().totalVideoFrames)).toBeGreaterThan(frames);
+  await page.getByRole('button', { name: 'Next slide', exact: true }).focus();
+  await expect(page.locator('.fashion-hero')).toHaveAttribute('data-motion', 'stopped');
+  await expect(page.locator('.fashion-hero')).toHaveAttribute('data-video-motion', 'running');
+  const focusedFrames = await first.evaluate((video: HTMLVideoElement) => video.getVideoPlaybackQuality().totalVideoFrames);
+  await expect.poll(() => first.evaluate((video: HTMLVideoElement) => video.getVideoPlaybackQuality().totalVideoFrames)).toBeGreaterThan(focusedFrames);
   await page.getByRole('button', { name: 'Next slide', exact: true }).click();
   await expect(page.locator('.fashion-hero')).toHaveAttribute('data-direction', 'next');
   await expect.poll(() => first.evaluate((video: HTMLVideoElement) => video.paused)).toBe(true);
@@ -38,6 +51,11 @@ test('real local clips decode and play silently; only active video loads and bac
   const second = page.locator('.fashion-hero__slide[data-slide="2"] video');
   await expect(second).toHaveAttribute('data-video-state', 'ready');
   await expect.poll(() => second.evaluate((video: HTMLVideoElement) => video.currentTime > 0 && !video.paused)).toBe(true);
+  await page.getByRole('button', { name: 'Next slide', exact: true }).click();
+  const third = page.locator('.fashion-hero__slide[data-slide="3"] video');
+  await expect(third).toHaveAttribute('data-video-state', 'ready');
+  await expect.poll(() => third.evaluate((video: HTMLVideoElement) => video.videoWidth > 0 && video.currentTime > 0 && !video.paused)).toBe(true);
+  await page.getByRole('button', { name: 'Previous slide', exact: true }).click();
   await page.getByRole('button', { name: 'Pause motion', exact: true }).click();
   await leaveControls(page);
   await expect.poll(() => page.locator('.fashion-hero video').evaluateAll(elements => elements.every(element => (element as HTMLVideoElement).paused))).toBe(true);
@@ -77,7 +95,7 @@ for (const failure of ['decode', 'autoplay'] as const) {
   test(`${failure} failure leaves a poster and working slide controls`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     if (failure === 'decode') {
-      await page.route('**/videos/winter-editorial-41491.mp4', route => route.fulfill({ status: 200, contentType: 'video/mp4', body: 'invalid test MP4' }));
+      await page.route('**/videos/winter-editorial-1.mp4', route => route.fulfill({ status: 200, contentType: 'video/mp4', body: 'invalid test MP4' }));
     } else {
       await page.addInitScript(() => { HTMLMediaElement.prototype.play = () => Promise.reject(new DOMException('Autoplay blocked in test', 'NotAllowedError')); });
     }
