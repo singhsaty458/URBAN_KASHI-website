@@ -130,6 +130,7 @@ The reference Instagram reel's video could not be reliably viewed. This is an **
 - The private SQLite database is created on first startup; seed runs once and does not replenish sold stock on restart. See [.env.example](.env.example) for its default location.
 - Schema migrations proceed through **v3**, preserving existing accounts/sessions, catalogue identifiers, orders and historical snapshots. V3 adds lifecycle timestamps and the image-upload registry. Back up before upgrading; do not replace an existing database with a fresh seed.
 - Private environment configuration, database storage, dependencies, generated build and test artifacts are excluded from source control.
+- An intentionally sanitized catalogue-only SQLite snapshot is documented in [seed/README.md](seed/README.md). It has no accounts, sessions, orders or payment records; use it only for a new installation, never to replace a working store. Private secrets remain uncommitted; [.env.example](.env.example) is the safe configuration template.
 - `HOST` defaults to `127.0.0.1`; the site is not exposed publicly by default.
 - Passwords use bcrypt (cost 12); only hashes of random session tokens are stored in SQLite. Session cookies are HttpOnly and SameSite=Lax.
 - Browser API writes require `X-Requested-With: UrbanKashi`; cross-site Fetch Metadata writes are rejected. Only the exact signed raw `POST /api/payments/webhook` bypasses that header. No open CORS.
