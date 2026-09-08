@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../context/Store';
 import { useTitle } from '../lib/api';
 import { Empty, ErrorState, Image, Loading, ProductGrid } from '../components/UI';
+import { HeroVideo } from '../components/HeroVideo';
+import { heroSlides, heroSlideDuration } from '../lib/hero';
 import '../premium-home.css';
 
 export const editorialImages = {
@@ -15,24 +17,6 @@ export const editorialImages = {
   campaign: '/images/photo-1516257984-b1b4d707412e.jpg',
   story: '/images/kashi-riverside.svg',
 };
-
-const heroSlides = [
-  {
-    image: editorialImages.campaign,
-    caption: 'Denim, a different way',
-    alt: 'Demo editorial photograph of a man wearing a denim jacket',
-  },
-  {
-    image: editorialImages.hero,
-    caption: 'Change the silhouette',
-    alt: 'Demo editorial photograph of a man in a navy suit',
-  },
-  {
-    image: editorialImages.shirts,
-    caption: 'Find your everyday',
-    alt: 'Demo editorial photograph of a hanging denim shirt',
-  },
-];
 
 const categories = [
   { name: 'Shirts', image: editorialImages.shirts },
@@ -68,7 +52,11 @@ function useInViewport() {
 export function Home() {
   useTitle('Wear your own energy.');
   const { products, productsLoading, productsError, refreshProducts } = useStore();
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [selection, setSelection] = useState({ active: 0, previous: -1, direction: 'next' });
+  const activeSlide = selection.active;
+  const swipeStart = useRef<{ id: number; x: number; y: number; time: number } | null>(null);
+  const [saveData] = useState(() => typeof navigator !== 'undefined'
+    && Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData));
   const [paused, setPaused] = useState(() => {
     try {
       return typeof window !== 'undefined' && window.localStorage.getItem(motionPreferenceKey) === 'true';
@@ -112,8 +100,8 @@ export function Home() {
     if (!heroRunning) return;
     // One timer, reset after each selection/resume; no per-frame JS animation work.
     const timer = window.setTimeout(() => {
-      setActiveSlide(current => (current + 1) % heroSlides.length);
-    }, 6000);
+      setSelection(current => ({ active: (current.active + 1) % heroSlides.length, previous: current.active, direction: 'next' }));
+    }, heroSlideDuration);
     return () => window.clearTimeout(timer);
   }, [activeSlide, heroRunning]);
 
@@ -133,6 +121,20 @@ export function Home() {
     } catch {
       // Restricted storage must not prevent an in-memory motion preference.
     }
+  }
+
+  function selectSlide(next: number, direction: 'next' | 'previous') {
+    setSelection(current => next === current.active ? current : { active: next, previous: current.active, direction });
+  }
+
+  function finishSwipe(event: PointerEvent<HTMLElement>) {
+    const start = swipeStart.current;
+    swipeStart.current = null;
+    if (!start || start.id !== event.pointerId || performance.now() - start.time > 900) return;
+    const dx = event.clientX - start.x;
+    const dy = event.clientY - start.y;
+    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
+    selectSlide((activeSlide + (dx < 0 ? 1 : -1) + heroSlides.length) % heroSlides.length, dx < 0 ? 'next' : 'previous');
   }
 
   function handleFilterKey(event: KeyboardEvent<HTMLButtonElement>, index: number) {
@@ -167,9 +169,16 @@ export function Home() {
         data-in-view={hero.inView}
         data-hovered={hovered}
         data-focus-within={focusWithin}
+        data-direction={selection.direction}
+        data-save-data={saveData}
         onPointerEnter={event => { if (event.pointerType !== 'touch') setHovered(true); }}
         onPointerLeave={() => setHovered(false)}
-        onPointerCancel={() => setHovered(false)}
+        onPointerDown={event => {
+          if (event.pointerType === 'mouse' || !event.isPrimary || (event.target as Element).closest('a, button')) return;
+          swipeStart.current = { id: event.pointerId, x: event.clientX, y: event.clientY, time: performance.now() };
+        }}
+        onPointerUp={finishSwipe}
+        onPointerCancel={() => { setHovered(false); swipeStart.current = null; }}
         onFocusCapture={() => setFocusWithin(true)}
         onBlurCapture={event => {
           if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocusWithin(false);
@@ -179,7 +188,7 @@ export function Home() {
           {heroSlides.map((slide, index) => (
             <div
               key={slide.image}
-              className={`fashion-hero__slide${index === activeSlide ? ' is-active' : ''}`}
+              className={`fashion-hero__slide${index === activeSlide ? ` is-active${selection.previous >= 0 ? ' is-entering' : ''}` : index === selection.previous ? ' is-leaving' : ''}`}
               role="group"
               aria-roledescription="slide"
               aria-label={`${index + 1} of ${heroSlides.length}: ${slide.caption}`}
@@ -192,6 +201,11 @@ export function Home() {
                 alt={slide.alt}
                 fetchPriority={index === 0 ? 'high' : 'low'}
                 decoding="async"
+              />
+              <HeroVideo
+                src={slide.video}
+                poster={slide.image}
+                running={index === activeSlide && heroRunning && !saveData}
               />
             </div>
           ))}
@@ -214,7 +228,7 @@ export function Home() {
               <span className="fashion-hero__index">0{activeSlide + 1} / 03</span>
               {heroSlides[activeSlide].caption}
             </p>
-            <p className="fashion-demo-note">Editorial preview · local demo photography & inventory</p>
+            <p className="fashion-demo-note">Winter editorial · stock footage, not actual store products</p>
           </div>
           <div className="fashion-hero__controls" role="group" aria-label="Editorial carousel controls">
             <button
@@ -233,7 +247,7 @@ export function Home() {
                 className="fashion-circle"
                 aria-label="Previous slide"
                 aria-controls="fashion-hero-slides"
-                onClick={() => setActiveSlide(current => (current - 1 + heroSlides.length) % heroSlides.length)}
+                onClick={() => selectSlide((activeSlide - 1 + heroSlides.length) % heroSlides.length, 'previous')}
               >
                 <ArrowLeft size={18} aria-hidden="true" />
               </button>
@@ -246,7 +260,7 @@ export function Home() {
                     aria-label={`Show slide ${index + 1}: ${slide.caption}`}
                     aria-pressed={index === activeSlide}
                     aria-controls="fashion-hero-slides"
-                    onClick={() => setActiveSlide(index)}
+                    onClick={() => selectSlide(index, index < activeSlide ? 'previous' : 'next')}
                   ><span aria-hidden="true" /></button>
                 ))}
               </div>
@@ -255,18 +269,20 @@ export function Home() {
                 className="fashion-circle"
                 aria-label="Next slide"
                 aria-controls="fashion-hero-slides"
-                onClick={() => setActiveSlide(current => (current + 1) % heroSlides.length)}
+                onClick={() => selectSlide((activeSlide + 1) % heroSlides.length, 'next')}
               >
                 <ArrowRight size={18} aria-hidden="true" />
               </button>
             </div>
           </div>
           <p id="fashion-motion-help" className="sr-only">
-            Pause controls all looping homepage motion. Slides also pause while hovered or focused.
+            Pause controls all looping homepage motion, including muted videos. Swipe left or right to change slides.
+            Slides and videos also pause while hovered or focused.
             After resuming, move focus and the pointer outside the hero to allow automatic slides.
             Your device’s reduced-motion preference always takes priority. Manual slide controls remain available.
           </p>
           {reducedMotion && <p className="fashion-motion-note">Reduced motion is on · switch slides manually</p>}
+          {saveData && <p className="fashion-motion-note">Data saver is on · showing video posters</p>}
         </div>
       </section>
 

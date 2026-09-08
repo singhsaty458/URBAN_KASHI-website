@@ -86,6 +86,9 @@
 
 /* The media occupies the right 65%; a full-width scrim protects stationary copy. */
 .fashion-home .fashion-hero {
+  --slide-enter: 100%;
+  --slide-exit: -100%;
+  touch-action: pan-y pinch-zoom;
   position: relative;
   isolation: isolate;
   display: flex;
@@ -119,11 +122,29 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 1.2s ease;
   pointer-events: none;
 }
 
 .fashion-home .fashion-hero__slide.is-active { opacity: 1; }
+.fashion-home .fashion-hero[data-direction='previous'] { --slide-enter: -100%; --slide-exit: 100%; }
+.fashion-home .fashion-hero__slide.is-entering { animation: fashion-slide-in .85s cubic-bezier(.22, .68, .2, 1) both; }
+.fashion-home .fashion-hero__slide.is-leaving { animation: fashion-slide-out .85s cubic-bezier(.22, .68, .2, 1) both; }
+.fashion-home:not([data-motion='running']) .fashion-hero__slide { animation: none; }
+.fashion-home:not([data-motion='running']) .fashion-hero__slide.is-leaving { opacity: 0; }
+
+.fashion-home .fashion-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.fashion-home .fashion-hero__video.is-ready { opacity: 1; }
+.fashion-home .fashion-hero__slide[data-slide='1'] :is(.fashion-hero__photo, .fashion-hero__video) { object-position: center 30%; }
+.fashion-home[data-reduced-motion='true'] .fashion-hero__video { opacity: 0; transition: none; }
 
 .fashion-home .fashion-hero__photo {
   width: 100%;
@@ -138,7 +159,6 @@
 .fashion-home .fashion-hero__slide[data-slide='2'] .fashion-hero__photo { object-position: 55% 24%; }
 .fashion-home .fashion-hero__slide[data-slide='3'] .fashion-hero__photo { object-position: 55% 48%; }
 .fashion-home .fashion-hero[data-motion='running'] .is-active .fashion-hero__photo { animation-play-state: running; }
-.fashion-home .fashion-hero[data-motion='stopped'] .fashion-hero__slide { transition: none; }
 
 .fashion-home .fashion-hero__content {
   padding: 88px var(--fashion-gutter) 60px;
@@ -441,6 +461,15 @@ body:has(.fashion-home:not([data-motion='running'])) .uk-brand__trishul { animat
   to { transform: scale(1.105) translate3d(-1.2%, .6%, 0); }
 }
 
+@keyframes fashion-slide-in {
+  from { transform: translate3d(var(--slide-enter), 0, 0); opacity: 1; }
+  to { transform: translate3d(0, 0, 0); opacity: 1; }
+}
+@keyframes fashion-slide-out {
+  from { transform: translate3d(0, 0, 0); opacity: 1; }
+  to { transform: translate3d(var(--slide-exit), 0, 0); opacity: 0; }
+}
+
 @keyframes fashion-lookbook-drift {
   from { transform: scale(1.04) translate3d(0, -.6%, 0); }
   to { transform: scale(1.1) translate3d(-.8%, .6%, 0); }
@@ -533,7 +562,9 @@ body:has(.fashion-home:not([data-motion='running'])) .uk-brand__trishul { animat
   .fashion-home .fashion-lookbook__frame > :is(img, .image-fallback),
   .fashion-home .spinner { animation: none; transform: none; }
   .fashion-home .fashion-hero__slide,
+  .fashion-home .fashion-hero__video,
   .fashion-home .product-image-wrap img,
   .fashion-home .quick-view { transition: none; }
+  .fashion-home .fashion-hero__slide { animation: none; }
   .fashion-home .product-card:hover .product-image-wrap img { transform: none; }
 }

@@ -297,14 +297,14 @@ test('real catalogue tabs support roving keyboard selection, four-piece limits a
 
 test('failed photography has an accessible fallback and catalogue failure retries into empty and recovered edits', async ({ page }) => {
   let catalogueState: 'error' | 'empty' | 'real' = 'error';
-  await page.route('**/images/photo-1516257984-b1b4d707412e.jpg', route => route.fulfill({ status: 200, contentType: 'image/jpeg', body: 'deliberately invalid test image' }));
+  await page.route('**/images/winter-editorial-41491.jpg', route => route.fulfill({ status: 200, contentType: 'image/jpeg', body: 'deliberately invalid test image' }));
   await page.route('**/api/products', route => catalogueState === 'real' ? route.fallback() : route.fulfill({
     status: catalogueState === 'error' ? 503 : 200,
     json: catalogueState === 'error' ? { error: 'Test edit temporarily unavailable.' } : { products: [] },
   }));
   await page.goto('/');
   const fallback = page.locator('.fashion-hero__slide.is-active .image-fallback');
-  await expect(fallback).toHaveAccessibleName('Demo editorial photograph of a man wearing a denim jacket');
+  await expect(fallback).toHaveAccessibleName('Demo editorial photograph of a male model putting on a winter coat');
   await expect(fallback).toBeVisible();
   const panel = page.getByRole('tabpanel');
   await expect(panel.getByRole('alert')).toContainText('Test edit temporarily unavailable.');

@@ -13,6 +13,7 @@
     "test": "tsx --test tests/*.test.ts",
     "test:e2e": "npm run build && playwright test",
     "assets:demo": "node --use-system-ca --import tsx scripts/cache-demo-images.ts",
+    "assets:videos": "node --use-system-ca --import tsx scripts/cache-demo-videos.ts",
     "data:export:sanitized": "tsx scripts/export-sanitized-database.ts",
     "admin:create": "tsx server/create-admin.ts",
     "admin:setup": "tsx server/setup-admin.ts"
