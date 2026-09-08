@@ -2,6 +2,8 @@
 
 A **locally implemented full-stack ecommerce storefront** owned independently by URBAN KASHI: React/TypeScript, Express and its own SQLite database. **No POS integration, shared database, shared accounts, or calls to the neighbouring POS application; no synchronization ever.** Owner-supplied existing POS barcodes can be imported as text through CSV, without connecting to POS. No actual POS export file has been supplied or imported for verification. All work stays in this website workspace, never the adjacent POS project.
 
+**New laptop/PC?** Follow [instruction.md](instruction.md) for the step-by-step Hinglish clone/install/database/build/run guide, or attach that file to an AI assistant in the cloned workspace.
+
 ## Office-device execution hold — 8 September 2026
 
 Following the reported corporate security alert, work on this office laptop is limited to **local source review and text edits until explicit IT approval**. The run, test, admin-creation, network-preview and deployment instructions below are reference instructions, not permission to execute them on this device. Do not start/restart services, run terminal commands or tests/builds, install/download dependencies, make app/browser/network requests, or change accounts/database contents during the hold. Do not bypass endpoint controls or change transports to work around a blocked operation. Have IT review the existing test transport workaround before any test rerun.
